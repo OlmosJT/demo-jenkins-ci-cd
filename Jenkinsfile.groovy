@@ -25,7 +25,7 @@ pipeline {
         }
         stage('Code Coverage') {
             steps {
-                sh "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Pcoverage-per-test"
+                bat "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Pcoverage-per-test"
             }
         }
         stage('Sonar Analysis') {
@@ -35,7 +35,7 @@ pipeline {
 
             steps {
                 withSonarQubeEnv("sonar-server") {
-                    sh 'mvn clean package sonar:sonar'
+                    bat 'mvn clean package sonar:sonar'
                 }
             }
         }
