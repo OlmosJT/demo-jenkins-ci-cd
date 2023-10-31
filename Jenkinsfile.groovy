@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    tools { maven 'maven' }
     options {
         // only keep 10 logs for no more than 10 days
         buildDiscarder(logRotator(daysToKeepStr: '10', numToKeepStr: '10'))
