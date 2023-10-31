@@ -28,9 +28,16 @@ pipeline {
             bat 'mvn clean install'
           }
         }
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
+            }
+        }
         stage('Deploy') {
             steps {
-                deploy adapters: [tomcat(url: 'http://localhost:8181', path: '/demo-jenkins-ci-cd')], war: 'target/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'tomcat.admin', path: '', url: 'http://localhost:8181/')],
+                        contextPath: 'demo-jenkins-ci-cd',
+                        war: 'target/*.war'
             }
         }
     }
