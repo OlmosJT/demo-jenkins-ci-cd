@@ -30,7 +30,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                deploy contextPath: 'http://localhost:8181', war: '**/*.war'
+                deploy adapters: [tomcat(url: 'http://localhost:8181', path: '/demo-jenkins-ci-cd')], war: 'target/*.war'
             }
         }
     }
