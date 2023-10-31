@@ -28,6 +28,17 @@ pipeline {
             bat 'mvn clean install'
           }
         }
+        stage('Sonar Analysis') {
+            environment {
+                scannerHome = tool "sonar-scanner"
+            }
+
+            steps {
+                withSonarQubeEnv("sonar-server") {
+                    sh 'mvn clean package sonar:sonar'
+                }
+            }
+        }
         stage('Archive Artifacts') {
             steps {
                 archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
