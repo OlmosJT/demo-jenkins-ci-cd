@@ -18,15 +18,15 @@ pipeline {
             checkout scm
           }
         }
-        stage('Test') {
-          steps {
-            bat 'mvn test'
-          }
-        }
         stage('Build') {
-          steps {
-            bat 'mvn clean install'
-          }
+            steps {
+                bat 'mvn clean install -Dmaven.test.skip=true'
+            }
+        }
+        stage('Code Coverage') {
+            steps {
+                sh "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Pcoverage-per-test"
+            }
         }
         stage('Sonar Analysis') {
             environment {
