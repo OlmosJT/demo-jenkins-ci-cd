@@ -28,6 +28,11 @@ pipeline {
             bat 'mvn clean install'
           }
         }
+        stage('Deploy') {
+            steps {
+                deploy contextPath: 'http://localhost:8181', war: '**/*.war'
+            }
+        }
     }
 
 }
